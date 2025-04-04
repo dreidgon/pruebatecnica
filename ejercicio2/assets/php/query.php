@@ -13,17 +13,7 @@
       $conn = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
       // set the PDO error mode to exception
       $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      /*
-      $sql = "CREATE TABLE users (
-        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(30) NOT NULL,
-        dni VARCHAR(30) NOT NULL,
-        telephone VARCHAR(30) NOT NULL,
-        email VARCHAR(50),
-        schedule_type VARCHAR(50),
-        date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-        )";
-        $conn->exec($sql);*/
+      
         if( isset($_POST['dni_verify']) ){
           $sql = "SELECT COUNT(*) FROM users WHERE dni = :dni";
           $stmt = $conn->prepare($sql);
@@ -89,9 +79,6 @@
               
               }
 
-
-
-
            } else {
             /*We need to create it first */
             $sql = "INSERT INTO users (name, dni, telephone,email,schedule_type,date,hour) VALUES (?,?,?,?,?,?,?)";
@@ -114,23 +101,8 @@
               echo json_encode($message_response);
             }
              
-            /*
-              id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(30) NOT NULL,
-        dni VARCHAR(30) NOT NULL,
-        telephone VARCHAR(30) NOT NULL,
-        email VARCHAR(50),
-        schedule_type VARCHAR(50),
-        date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-            
-            */
           }
-
         }
-      
-      
-
-
     } catch(PDOException $e) {
       $message_response = [];
       $message_response["success"] = false;
