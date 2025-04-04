@@ -23,16 +23,6 @@
                 hour INT(255) NOT NULL,
                 date VARCHAR(30) NOT NULL
                 );";
-            /*
-            $sql = "CREATE TABLE users (
-                id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-                name VARCHAR(30) NOT NULL,
-                dni VARCHAR(30) NOT NULL,
-                telephone VARCHAR(30) NOT NULL,
-                email VARCHAR(50),
-                schedule_type VARCHAR(50),
-                date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-                )";*/
             $stmt = $conn->prepare($sql);
             $stmt->execute();
         } catch(PDOException $e) {
@@ -51,24 +41,23 @@
 </head>
 <style>
     html {
-  min-height: 100%;/* fill the screen height to allow vertical alignement */
-  display: grid; /* display:flex works too since body is the only grid cell */
-}
-
-body {
-  margin: auto;
-}
-.message {
-  margin: auto;
-}
-.error{
-    background-color:red;
-    color:white
-}
-.success{
-    background-color:green;
-    color:white
-}
+        min-height: 100%;/* fill the screen height to allow vertical alignement */
+        display: grid; /* display:flex works too since body is the only grid cell */
+    }
+    body {
+    margin: auto;
+    }
+    .message {
+    margin: auto;
+    }
+    .error{
+        background-color:red;
+        color:white
+    }
+    .success{
+        background-color:green;
+        color:white
+    }
 </style>
 <body>
     <form>
@@ -110,13 +99,9 @@ body {
                     }
                 }else{
                     $("#schedule_type option[value='revision']").remove()
-                    
                 }
-            
             }
         });
-            
-            
         });
         
         function add_error_class(message) {
@@ -124,13 +109,11 @@ body {
             $(".message").removeClass("error");
             $(".message").addClass("error");
             $(".message").html(message);
-            
         }
 
         function remove_error_class() {
             $(".message").html("");
-            $(".message").removeClass("error");
-            
+            $(".message").removeClass("error"); 
         }
 
         function success_post(message){
@@ -146,7 +129,6 @@ body {
 
         $('form').on('submit', function (e) {
            e.preventDefault();
-
             if ($("#name").val() != ""){
                 remove_error_class()
             }else{
@@ -183,34 +165,26 @@ body {
             remove_error_class()
            }
            
-
-        $.ajax({
-            type: 'post',
-            url: './assets/php/query.php',
-            data: $('form').serialize(),
-            success: function (data) {
-                
-                var data = $.parseJSON(data);
-                if (data.success == true){
-                    success_post(data.message)
-          
-                }else{
-                    error_post(data.message)
-                    
+           //Submit form throuch ajax
+            $.ajax({
+                type: 'post',
+                url: './assets/php/query.php',
+                data: $('form').serialize(),
+                success: function (data) {
+                    var data = $.parseJSON(data);
+                    if (data.success == true){
+                        success_post(data.message)
+                    }else{
+                        error_post(data.message)
+                    }
                 }
-                
-            }
-        });
-
-        });
-
-        });
+            });
+         });
+    });
 
         function isEmail(email) {
             var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
             return regex.test(email);
         }
-
   </script>
-
 </html>
